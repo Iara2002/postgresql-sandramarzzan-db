@@ -1,95 +1,127 @@
-📦 Base de Datos — SandraMarzzanDB
+# 📦 Base de Datos — *SandraMarzzanDB*
 
-Proyecto personal creado para practicar PostgreSQL, modelar datos reales y aplicar consultas SQL como parte de mi aprendizaje para QA.
+Proyecto personal creado para practicar **PostgreSQL** y modelar datos reales, aplicando consultas SQL utilizadas en QA para validación interna de datos.  
+Simula la gestión de clientes, productos y ventas de una distribuidora de perfumería y aromatización, inspirada en mi emprendimiento real.
 
-Este proyecto simula la gestión de clientes, productos y ventas de una distribuidora de perfumería y aromatización similar a mi emprendimiento real.
+---
 
-🧩 Objetivos del proyecto
+## 🧩 Objetivos del proyecto
 
-Crear una base de datos completa desde cero en PostgreSQL.
+- Crear una base de datos desde cero utilizando PostgreSQL.  
+- Modelar tablas relacionadas mediante claves primarias y foráneas.  
+- Insertar datos reales y consistentes.  
+- Practicar consultas SQL de uso real en QA.  
+- Generar un modelo entidad–relación (ER).  
+- Incluir evidencias visuales del funcionamiento en pgAdmin.  
+- Subir el proyecto completo a GitHub como parte de mi portafolio.
+---
+## 🗂️ Estructura del proyecto
+postgresql-sandramarzzan-db/
+│
+├── README.md
+├── script_creacion.sql
+├── script_datos.sql
+├── consultas.sql
+├── diagrama/
+│ └── diagrama_sandra_marzzan.png
+└── capturas/
+├── clientes.png
+├── productos.png
+├── ventas.png
+├── detalle_venta.png
+└── consultas_resultado.png
 
-Modelar tablas relacionadas usando claves primarias y foráneas.
+---
 
-Insertar datos reales de ejemplo.
+## 🗄️ Modelo de Base de Datos
 
-Practicar consultas SQL útiles para QA y análisis de datos.
+### ✔️ Tabla: **clientes**
+| Campo           | Tipo       | Descripción      |
+|-----------------|------------|------------------|
+| id_cliente (PK) | SERIAL     | Identificador    |
+| nombre          | VARCHAR    | Nombre completo  |
+| telefono        | VARCHAR    | Contacto         |
+| ciudad          | VARCHAR    | Localidad        |
+| fecha_registro  | DATE       | Fecha de alta    |
 
-Generar un diagrama del modelo entidad–relación (ER).
+---
 
-Subir evidencias visuales (capturas) del funcionamiento.
+### ✔️ Tabla: **productos**
+| Campo            | Tipo         |
+|------------------|--------------|
+| id_producto (PK) | SERIAL       |
+| nombre           | VARCHAR      |
+| categoria        | VARCHAR      |
+| precio           | NUMERIC      |
+| stock            | INT          |
 
-🗄️ Estructura de la base de datos
+---
 
-La base está compuesta por 4 tablas principales:
+### ✔️ Tabla: **ventas**
+| Campo            | Tipo                   |
+|------------------|------------------------|
+| id_venta (PK)    | SERIAL                 |
+| id_cliente (FK)  | INT → clientes         |
+| fecha_venta      | DATE                   |
+| total            | NUMERIC                |
 
-✔️ clientes
-Campo	Tipo	Descripción
-id_cliente	SERIAL PK	Identificador
-nombre	VARCHAR	Nombre completo
-telefono	VARCHAR	Contacto
-ciudad	VARCHAR	Localidad
-fecha_registro	DATE	Fecha alta
-✔️ productos
-Campo	Tipo
-id_producto	SERIAL PK
-nombre	VARCHAR
-categoria	VARCHAR
-precio	NUMERIC
-stock	INT
-✔️ ventas
-Campo	Tipo
-id_venta	SERIAL PK
-id_cliente	FK → clientes
-fecha_venta	DATE
-total	NUMERIC
-✔️ detalle_venta
-Campo	Tipo
-id_detalle	SERIAL PK
-id_venta	FK → ventas
-id_producto	FK → productos
-cantidad	INT
-subtotal	NUMERIC
-🔗 Diagrama del modelo (ER)
+---
 
-El diagrama se encuentra en:
+### ✔️ Tabla: **detalle_venta**
+| Campo            | Tipo                     |
+|------------------|--------------------------|
+| id_detalle (PK)  | SERIAL                   |
+| id_venta (FK)    | INT → ventas             |
+| id_producto (FK) | INT → productos          |
+| cantidad         | INT                      |
+| subtotal         | NUMERIC                  |
 
-📁 diagrama/diagrama_sandra_marzzan.png
+---
 
-Representa las relaciones:
+## 🔗 Diagrama Entidad–Relación (ER)
 
-Cliente 1—N Ventas
+📄 Disponible en:  
+**`/diagrama/diagrama_sandra_marzzan.png`**
 
-Ventas 1—N Detalle
+Relaciones principales:
 
-Productos 1—N Detalle
+- Cliente **1 — N** Ventas  
+- Ventas **1 — N** Detalle  
+- Productos **1 — N** Detalle  
 
-📁 Archivos incluidos
-Archivo	Descripción
-script_creacion.sql	     Creación de todas las tablas
-script_datos.sql	     Datos de ejemplo cargados
-consultas.sql	         Consultas SQL típicas
-/diagrama/	             Imagen del modelo ER
-/capturas/           	 Evidencias visuales del proyecto
+---
 
-🔍 Consultas destacadas
-Incluye:
-Listado de clientes
-Ventas por clientes
-Productos con stock bajo
-Detalle completo de cada venta
-JOIN entre todas las tablas
-Total por cliente (GROUP BY)
+## 🔍 Consultas SQL destacadas
+
+### 🔸 Total de compras por cliente
+SELECT c.nombre, SUM(v.total) AS total_compras
+FROM ventas v
+JOIN clientes c ON v.id_cliente = c.id_cliente
+GROUP BY c.nombre
+ORDER BY total_compras DESC;
+
+## 🔸 Productos con stock bajoSELECT nombre, stock
+FROM productos
+WHERE stock < 6;
+📸 Evidencias visuales
+
+Las capturas tomadas desde pgAdmin muestran:
+-Tablas creadas correctamente
+-Datos insertados
+-Consultas ejecutadas con éxito
+
+Ver carpeta ➝ /capturas/
+----
 
 🎯 Propósito del proyecto
-
-Este trabajo forma parte de mi proceso de formación como QA Tester y QA Automation, demostrando manejo de:
-
-SQL
-PostgreSQL
-Análisis de datos
-Modelado de base de datos
-Validación interna de datos (práctica clave para QA)
-
+Este proyecto forma parte de mi formación como QA Manual / QA Automation, demostrando habilidades en:
+- SQL
+- PostgreSQL
+- Validación interna de datos
+- Modelado y diseño de bases
+- Consultas con JOIN
+- Agrupamientos, filtros y análisis
+---------------
 💜 Autora
 Iara Camila Barcos
 GitHub: https://github.com/Iara2002
