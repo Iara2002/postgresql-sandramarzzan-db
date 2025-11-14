@@ -100,7 +100,9 @@ JOIN clientes c ON v.id_cliente = c.id_cliente
 GROUP BY c.nombre
 ORDER BY total_compras DESC;
 
-## 🔸 Productos con stock bajoSELECT nombre, stock
+## 🔸 Productos con stock bajo
+
+SELECT nombre, stock
 FROM productos
 WHERE stock < 6;
 ------
