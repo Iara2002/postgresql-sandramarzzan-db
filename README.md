@@ -103,12 +103,14 @@ ORDER BY total_compras DESC;
 ## 🔸 Productos con stock bajoSELECT nombre, stock
 FROM productos
 WHERE stock < 6;
+------
 📸 Evidencias visuales
 
 Las capturas tomadas desde pgAdmin muestran:
--Tablas creadas correctamente
--Datos insertados
--Consultas ejecutadas con éxito
+
+- Tablas creadas correctamente
+- Datos insertados
+- Consultas ejecutadas con éxito
 
 Ver carpeta ➝ /capturas/
 ----
